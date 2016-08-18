@@ -1,38 +1,156 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Backyard of GOTODSP by gotodsp</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta charset="UTF-8">
+    <title>.x-&gt;y=z by gotodsp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Backyard of GOTODSP</h1>
-        <p>Come on,goto dsp!</p>
+    <section class="page-header">
+      <h1 class="project-name">.x-&gt;y=z</h1>
+      <h2 class="project-tagline">Welcome my friends!</h2>
+    </section>
 
+    <section class="main-content">
+      <p>`// 色子有六面，数值分别是1、2、3、4、5、6
+private static int sides = 6;</p>
 
-        <p class="view"><a href="https://github.com/gotodsp">View My GitHub Profile</a></p>
+<p>/**</p>
 
-      </header>
-      <section>
-        <h1>
-<a id="gotodspgithubio" class="anchor" href="#gotodspgithubio" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>gotodsp.github.io</h1>
+<ul>
+<li>打印</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> dist  待输出数组
+*/
+private static void print(double[] dist) {
+for(int i = 2; i &lt;= 2 * sides; ++i)
+    StdOut.println(dist[i]);
+StdOut.println("-------------------------");
+}</li>
+</ul>
 
-<p>Hello, Neo Day!!!</p>
-      </section>
-      <footer>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+<p>/**</p>
+
+<ul>
+<li>根据统计数据计算概率值</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> dist  统计数据数组</li>
+<li>
+<a href="https://github.com/return" class="user-mention">@return</a>  概率数组
+*/
+private static double[] computeProbability(double[] dist, int testTimes) {
+for(int i = 2; i &lt;= 2 * sides; ++i)
+    dist[i] /= (1.0 * testTimes);
+return dist;
+}</li>
+</ul>
+
+<p>/**</p>
+
+<ul>
+<li> 两个色子之和的理论概率值</li>
+<li>
+<a href="https://github.com/return" class="user-mention">@return</a>  理论概率值
+*/
+private static double[] theoreticalValue() {
+double[] dist = new double[2 * sides + 1];
+// 统计值出现的理论次数
+for(int i = 1; i &lt;=sides; ++i)
+    for(int j = 1; j &lt;= sides; ++j)
+        dist[i+j] += 1.0;
+// 计算理论概率
+dist = computeProbability(dist, 36);
+return dist;
+}</li>
+</ul>
+
+<p>/**</p>
+
+<ul>
+<li> 用随机数模拟掷色子并统计求出试验概率</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> N 抛掷次数</li>
+<li>
+<a href="https://github.com/return" class="user-mention">@return</a>  试验概率
+*/
+private static double[] simulate(int N) {
+double[] dist = new double[2 * sides + 1];
+// 做N次随机试验模拟抛色子,并统计数据
+for(int i = 0; i &lt; N; ++i) {
+    int a = StdRandom.uniform(1, 6 + 1);
+    int b = StdRandom.uniform(1, 6 + 1);
+    dist[a + b] += 1.0;
+}
+// 计算试验概率值
+dist = computeProbability(dist, N);
+return dist;
+}</li>
+</ul>
+
+<p>/**</p>
+
+<ul>
+<li>试验概率值能否与理论概率值至少匹配到小数点后三位数</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> dist0    理论概率值</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> dist1    试验概率值</li>
+<li>
+<a href="https://github.com/return" class="user-mention">@return</a>  能匹配到小数点后三位数则返回true，否则返回false
+*/
+private static boolean isMatch(double[] dist0, double[] dist1) {
+for(int i = 2; i &lt;= 2 * sides; ++i)
+    if(Math.abs(dist0[i] - dist1[i]) &gt;= 0.0001)
+        return false;
+return true;
+}</li>
+</ul>
+
+<p>/**</p>
+
+<ul>
+<li>测试得到符合要求的试验次数N</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> initTimes   试验初始次数值</li>
+<li>
+<a href="https://github.com/param" class="user-mention">@param</a> dist0 理论概率</li>
+<li>
+<a href="https://github.com/return" class="user-mention">@return</a>  符合要求的试验次数
+*/
+private static int testGetN(int initTimes, double[] dist0) {
+int N = initTimes;
+boolean match = false;
+while(!match) {
+    double[] dist1 = simulate(N);
+    match = isMatch(dist0, dist1);
+    if(match)
+        print(dist1);
+    // 当前N不合要求，则将N扩大10倍
+    N *= 10;
+}
+return N;
+}</li>
+</ul>
+
+<p>public static void main(String[] args) {
+    double[] dist0 = theoreticalValue();
+    print(dist0);
+    int initTimes = 1000000;
+    int N = testGetN(initTimes, dist0);
+    StdOut.println("至少试验次数的数量级： o(" + N + ")");
+}`</p>
+
+      <footer class="site-footer">
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+
+    </section>
+
+  
   </body>
 </html>
