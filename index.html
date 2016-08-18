@@ -21,6 +21,20 @@
       <div class="inner">
         <h1>.x-&gt;y=z</h1>
         <h2>有朋自远方来，不亦乐乎！</h2>
+        <div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span style="color: #0000ff">def</span> g(x):
+    <span style="color: #0000ff">return</span> x % 100000000 + x // 100000000
+
+<span style="color: #0000ff">def</span> f(x):
+    <span style="color: #0000ff">if</span> x == 1:
+        <span style="color: #0000ff">return</span> 3
+    <span style="color: #0000ff">elif</span> x % 2 == 0:
+        <span style="color: #0000ff">return</span> g(f(x / 2) * f(x / 2))
+    <span style="color: #0000ff">elif</span> x % 2 == 1:
+        <span style="color: #0000ff">return</span> g(f(1) * f(x - 1))
+
+<span style="color: #0000ff">if</span> __name__ == <span style="color: #a31515">&#39;__main__&#39;</span>:
+    <span style="color: #0000ff">print</span>(f(50))
+</pre></div>
         <a href="https://github.com/gotodsp" class="button"><small>Follow me on</small> GitHub</a>
       </div>
     </header>
